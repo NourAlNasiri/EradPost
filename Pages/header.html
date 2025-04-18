@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    <!-- ملفات الستايل -->
+    <link rel="stylesheet" href="../css/header.css">
+    <!-- مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- الخطوط العربية -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- بداية الهيدر -->
+    <header class="header">
+        <div class="header-content">
+            <!-- شعار البريد العراقي -->
+            <div class="logo">
+                <!-- <img src="../assets/images/Post-Iraq.png" alt="شعار البريد العراقي"> -->
+            </div>
+            
+            <!-- زر القائمة للهواتف المحمولة -->
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- قائمة التنقل الرئيسية -->
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <!-- عناصر القائمة مع الأيقونات -->
+                    <li><a href="../Dashboard.html" class="nav-link" data-page="index">
+                        <i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+
+                    <li><a href="../Pages/PostalDepartment.html" class="nav-link" data-page="PostalDepartment">
+                        <i class="fas fa-mail-bulk"></i> الأقسام البريدية</a></li>
+
+                    <li><a href="../Pages/PostalOffice.html" class="nav-link" data-page="PostalOffice">
+                        <i class="fas fa-building"></i> المكاتب البريدية</a></li>
+
+                    <li><a href="../Pages/TypesRevenue.html" class="nav-link" data-page="TypesRevenue">
+                        <i class="fas fa-file-invoice-dollar"></i> أنواع الإيرادات</a></li>
+
+                    <li><a href="../Pages/Managment-Revenue.html" class="nav-link" data-page="Managment-Revenue">
+                        <i class="fas fa-receipt"></i> الإيرادات </a></li>
+
+                    <li><a href="../Pages/users.html" class="nav-link" data-page="users">
+                        <i class="fas fa-users"></i> الموظفين</a></li>
+
+                    <li><a href="../Pages/reports.html" class="nav-link" data-page="reports">
+                        <i class="fas fa-chart-bar"></i> التقارير</a></li>
+                </ul>
+            </nav>
+
+            <!-- معلومات الشركة -->
+            <div class="company-info">
+                <h4>الشركة العامة للبريد والتوفير</h4>
+                <h3>نظام إدارة الإيرادات</h3>
+            </div>
+
+            <!-- الملف الشخصي للمستخدم -->
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">اسم المستخدم</span>
+                    <span class="user-role">المدير</span>
+                </div>
+                <!-- قائمة الملف الشخصي -->
+                <div class="profile-dropdown">
+                    <a href="../Pages/users.html" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        الصفحة الشخصية
+                    </a>
+                    <a href="../login.html" class="dropdown-item">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل الخروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ملف JavaScript -->
+    <script src="js/header.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> التقارير</title>
+    <link rel="stylesheet" href="../css/report.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="container" style="margin-top: 100px;">
+        <div class="header-report">
+            <i class="fas fa-chart-bar"></i>
+            <h1> التقارير</h1>
+        </div>
+
+        <form id="reportForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="revenueType">نوع الإيراد</label>
+                    <select id="revenueType" required>
+                        <option value="">اختر نوع الإيراد</option>
+                        <option value="1">إيراد 1</option>
+                        <option value="2">إيراد 2</option>
+                        <option value="3">إيراد 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="governorate">المحافظة</label>
+                    <select id="governorate" required>
+                        <option value="">اختر المحافظة</option>
+                        <option value="1">محافظة 1</option>
+                        <option value="2">محافظة 2</option>
+                        <option value="3">محافظة 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentType">نوع الدفع</label>
+                    <select id="paymentType" required>
+                        <option value="">اختر نوع الدفع</option>
+                        <option value="cash">نقدي</option>
+                        <option value="card">بطاقة الاكترونية</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="postOffice">المكتب البريدي</label>
+                    <select id="postOffice" required>
+                        <option value="">اختر المكتب البريدي</option>
+                        <option value="1">مكتب 1</option>
+                        <option value="2">مكتب 2</option>
+                        <option value="3">مكتب 3</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="postSection">القسم البريدي</label>
+                    <select id="postSection" required>
+                        <option value="">اختر القسم البريدي</option>
+                        <option value="1">قسم 1</option>
+                        <option value="2">قسم 2</option>
+                        <option value="3">قسم 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportType">نوع التقرير</label>
+                    <select id="reportType" required>
+                        <option value="">اختر نوع التقرير</option>
+                        <option value="daily">تقرير يومي</option>
+                        <option value="monthly">تقرير شهري</option>
+                        <option value="yearly">تقرير سنوي</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateRange">الفترة الزمنية</label>
+                    <div class="date-range">
+                        <input type="date" id="startDate" required>
+                        <span>إلى</span>
+                        <input type="date" id="endDate" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                    بحث
+                </button>
+                <button type="button" class="btn btn-success" onclick="exportToExcel()">
+                    <i class="fas fa-file-excel"></i>
+                    تصدير Excel
+                </button>
+                <button type="button" class="btn btn-info" onclick="printReport()">
+                    <i class="fas fa-print"></i>
+                    طباعة
+                </button>
+            </div>
+        </form>
+
+        <div class="results-section" id="resultsSection">
+            <h2>نتائج البحث</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>اسم المكتب</th>
+                        <th>الشهر</th>
+                        <th>مبيع الطوابع البريدية</th>
+                        <th>اجور الحزم والرزم</th>
+                        <th>تاجير الصناديق البريدية</th>
+                        <th>المظاريف</th>
+                        <th>اجور الارضية</th>
+                        <th>اجور التوصيل</th>
+                        <th>اجور اخرى متنوعة</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                    <!-- سيتم إضافة نتائج البحث هنا -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- تحميل الفوتر -->
+    <div id="footer"></div>
+
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.getElementById('resultsSection').style.display = 'block';
+            // هنا يتم إضافة كود البحث
+            console.log('تم البحث');
+        });
+    </script>
+    <!-- <script src="../js/main.js"></script> -->
+    <script>
+        // تحميل الهيدر والفوتر مرة واحدة
+        fetch("header.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("header").innerHTML = data;
+
+                // تحميل ملف header.js
+                const script = document.createElement('script');
+                script.src = '../js/header.js';
+                document.body.appendChild(script);
+
+                // إضافة أحداث النقر على الروابط
+                document.querySelectorAll("#header a").forEach(link => {
+                    link.addEventListener("click", function (event) {
+                        event.preventDefault(); // منع التحديث الافتراضي
+
+                        // إزالة الكلاس active من جميع الروابط
+                        document.querySelectorAll("#header a").forEach(l => {
+                            l.classList.remove('active');
+                        });
+
+                        // إضافة الكلاس active للرابط المحدد
+                        this.classList.add('active');
+
+                        let page = this.getAttribute("data-page"); // جلب اسم الصفحة
+                        loadPage(page); // تحميل الصفحة
+                    });
+                });
+
+                // تحميل الفوتر
+                fetch("footer.html")
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("footer").innerHTML = data;
+                    });
+
+                // تفعيل زر القائمة للهواتف المحمولة
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navMenu = document.querySelector('.nav-menu');
+
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            });
+
+        // دالة تحميل الصفحة المحددة
+        function loadPage(page) {
+            let pageFile = page === "home" ? "home.html" : page + ".html";
+
+            fetch(pageFile)
+                .then(response => response.text())
+                .then(data => document.getElementById("content").innerHTML = data)
+                .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+        }
+    </script>
+</body>
+
+</html>

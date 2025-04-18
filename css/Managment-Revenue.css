@@ -1,0 +1,1214 @@
+/* تعريف المتغيرات الأساسية للألوان والظلال */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --border-color: #bdc3c7;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    
+    /* ألوان مميزة لكل قسم من الإيرادات */
+    --parcels-color: #3498db;
+    --stamps-color: #2ecc71;
+    --boxes-color: #e74c3c;
+    --envelopes-color: #f1c40f;
+    --rent-color: #9b59b6;
+    --misc-color: #1abc9c;
+}
+
+/* تنسيقات الصفحة الأساسية */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #f5f6fa;
+    color: var(--dark-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* تنسيق المحتوى الرئيسي */
+.main-content {
+    padding-top: 80px; /* إضافة مسافة من أعلى لتجنب تداخل الهيدر */
+    min-height: calc(100vh - 80px); /* ارتفاع الصفحة ناقص ارتفاع الهيدر */
+}
+
+/* حاوية الإيرادات الرئيسية */
+.revenue-container {
+    /* max-width: 1200px; */
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    position: relative;
+    z-index: 1;
+    overflow-x: hidden; /* منع التمرير الأفقي */
+}
+
+
+/* تنسيقات رأس الصفحة وحقول البحث */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--accent-color);
+    gap: 1rem;
+}
+
+.page-title {
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* تنسيقات حقول البحث */
+.search-fields {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    background: var(--light-color);
+    padding: 0.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    flex-wrap: wrap; /* السماح بالتفاف العناصر */
+    box-sizing: border-box;
+}
+
+/* إخفاء شريط التمرير في حقول البحث */
+.search-fields::-webkit-scrollbar {
+    display: none;
+}
+
+/* تنسيقات حقول البحث الفردية */
+.search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    background: white;
+    padding: 0.4rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    min-width: 200px;
+    max-width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-field::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent-color);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.search-field:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-color: rgba(52, 152, 219, 0.2);
+}
+
+.search-field:hover::before {
+    opacity: 1;
+}
+
+.search-field label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.1rem;
+    font-weight: 600;
+    padding-right: 0.2rem;
+    position: relative;
+}
+
+.search-field input {
+    width: 100%;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--light-color);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+    cursor: text;
+    box-sizing: border-box;
+    padding-left: 0.6rem;
+    background-image: none;
+}
+
+.search-field select {
+    width: 100%;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--light-color);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.763-3.763L10.825 4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 0.6rem center;
+    background-size: 10px;
+    padding-left: 2rem;
+}
+
+.search-field select:focus,
+.search-field input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+    background-color: white;
+}
+
+.search-field select:disabled,
+.search-field input:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* تنسيقات أزرار البحث */
+.search-button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.3rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1200px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-fields {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .search-field {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .search-field select,
+    .search-field input {
+        width: 100%;
+    }
+
+    .search-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* تنسيقات شريط التنقل بين الأقسام */
+.tabs-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+/* تنسيقات أزرار التنقل */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 15px;
+}
+
+.tab {
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    color: var(--secondary-color);
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* تنسيقات الأيقونات في أزرار التنقل */
+.tab i {
+    font-size: 1.2rem;
+}
+
+/* ألوان الأيقونات لكل قسم */
+.tab[data-tab="parcels"] i { color: var(--parcels-color); }
+.tab[data-tab="stamps"] i { color: var(--stamps-color); }
+.tab[data-tab="boxes"] i { color: var(--boxes-color); }
+.tab[data-tab="envelopes"] i { color: var(--envelopes-color); }
+.tab[data-tab="rent"] i { color: var(--rent-color); }
+.tab[data-tab="misc"] i { color: var(--misc-color); }
+
+.tab:hover {
+    color: var(--accent-color);
+}
+
+.tab.active {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+.tab.active i {
+    color: var(--accent-color);
+}
+
+/* تنسيقات النموذج وأقسامه */
+.form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.form-section {
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+/* شريط اللون المميز لكل قسم */
+.form-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--accent-color);
+}
+
+/* ألوان شريط الأقسام */
+#parcels-section::before { background: var(--parcels-color); }
+#stamps-section::before { background: var(--stamps-color); }
+#boxes-section::before { background: var(--boxes-color); }
+#envelopes-section::before { background: var(--envelopes-color); }
+#rent-section::before { background: var(--rent-color); }
+#misc-section::before { background: var(--misc-color); }
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid var(--accent-color);
+    position: relative;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-title {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.section-title i {
+    font-size: 1.6rem;
+}
+
+#parcels-section .section-title i { color: var(--parcels-color); }
+#stamps-section .section-title i { color: var(--stamps-color); }
+#boxes-section .section-title i { color: var(--boxes-color); }
+#envelopes-section .section-title i { color: var(--envelopes-color); }
+#rent-section .section-title i { color: var(--rent-color); }
+#misc-section .section-title i { color: var(--misc-color); }
+
+.section-total {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    background: var(--light-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    background: var(--light-color);
+    padding: 1.2rem;
+    border-radius: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 0;
+    background: white;
+    padding: 0.8rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-save,
+.btn-reset {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-save {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.btn-reset {
+    background-color: #e0e0e0;
+    color: var(--secondary-color);
+}
+
+.btn-reset:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+.btn-save i,
+.btn-reset i {
+    font-size: 1.1rem;
+}
+
+/* تنسيقات الجدول */
+.data-table-container {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    position: relative;
+}
+
+.revenue-table {
+    width: 100%;
+    min-width: 800px; /* الحد الأدنى لعرض الجدول */
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.revenue-table table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.revenue-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 1.2rem 1rem;
+    text-align: right;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.revenue-table td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid #eee;
+    color: var(--dark-color);
+    white-space: nowrap;
+}
+
+.revenue-table tr:last-child td {
+    border-bottom: none;
+}
+
+.revenue-table tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.revenue-table .actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+    position: sticky;
+    right: 0;
+    background: white;
+    z-index: 2;
+}
+
+.revenue-table .actions button {
+    padding: 0.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.revenue-table .actions .btn-edit {
+    color: #2196F3;
+}
+
+.revenue-table .actions .btn-delete {
+    color: #F44336;
+}
+
+.revenue-table .actions button:hover {
+    transform: scale(1.1);
+}
+
+.revenue-table .actions .btn-edit:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.revenue-table .actions .btn-delete:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.revenue-table .actions button i {
+    font-size: 1.1rem;
+}
+
+/* تنسيقات شريط التمرير */
+.data-table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.data-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.data-table-container::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+.data-table-container::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* تنسيقات حالة عدم وجود بيانات */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #95a5a6;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* تنسيقات الترقيم */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    flex-wrap: wrap;
+}
+
+.pagination button {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid var(--light-color);
+    background: white;
+    color: var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    transition: var(--transition);
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.pagination button.active {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 0 1rem;
+}
+
+/* تنسيقات حالة التحميل */
+.loading-state {
+    text-align: center;
+    padding: 2rem;
+}
+
+.loading-state i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding-top: 60px; /* تقليل المسافة في الشاشات الصغيرة */
+    }
+    
+    .revenue-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        padding: 0.8rem;
+    }
+    
+    .tabs {
+        flex-wrap: nowrap;
+    }
+    
+    .tab {
+        white-space: nowrap;
+    }
+
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs-container {
+        padding: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .tabs {
+        gap: 0.5rem;
+    }
+
+    .tab {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .form-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .section-total {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        padding: 0.8rem;
+        gap: 0.8rem;
+    }
+
+    .form-group {
+        padding: 0.6rem;
+    }
+
+    .form-actions {
+        justify-content: center;
+        gap: 0.6rem;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+    }
+
+    .search-field {
+        padding: 0.3rem;
+        min-width: 180px;
+    }
+
+    .search-field label {
+        font-size: 0.7rem;
+    }
+
+    .search-field select,
+    .search-field input {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabs-container {
+        padding: 0.6rem;
+    }
+
+    .tab {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .form-section {
+        padding: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+    }
+
+    .section-total {
+        font-size: 1rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .form-grid {
+        padding: 0.6rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .form-group input, 
+    .form-group select {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .search-field {
+        padding: 0.25rem;
+        min-width: 160px;
+    }
+
+    .search-field label {
+        font-size: 0.65rem;
+    }
+
+    .search-field select,
+    .search-field input {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.7rem;
+    }
+}
+
+
+/* تنسيقات متجاوبة للجدول */
+@media (max-width: 1200px) {
+    .revenue-table {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 992px) {
+    .revenue-table {
+        min-width: 600px;
+    }
+    
+    .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .table-header h3 {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .data-table-container {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .revenue-table {
+        min-width: 500px;
+    }
+
+    .revenue-table th,
+    .revenue-table td {
+        padding: 0.8rem 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .revenue-table .actions {
+        gap: 0.5rem;
+    }
+
+    .revenue-table .actions button {
+        padding: 0.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .revenue-table {
+        min-width: 400px;
+    }
+
+    .revenue-table th,
+    .revenue-table td {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.85rem;
+    }
+
+    .revenue-table .actions {
+        gap: 0.3rem;
+    }
+
+    .revenue-table .actions button {
+        padding: 0.3rem;
+    }
+}
+
+/* أنماط الإشعارات */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateX(120%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification i {
+    font-size: 20px;
+}
+
+.notification.success {
+    background-color: #e8f5e9;
+    border-right: 4px solid #4caf50;
+}
+
+.notification.success i {
+    color: #4caf50;
+}
+
+.notification.error {
+    background-color: #ffebee;
+    border-right: 4px solid #f44336;
+}
+
+.notification.error i {
+    color: #f44336;
+}
+
+.notification.info {
+    background-color: #e3f2fd;
+    border-right: 4px solid #2196f3;
+}
+
+.notification.info i {
+    color: #2196f3;
+}
+
+/* تنسيقات القائمة المنبثقة لتأكيد الحذف */
+.delete-confirm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.delete-confirm-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.delete-confirm-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.delete-confirm-modal.show .delete-confirm-content {
+    transform: scale(1);
+}
+
+.delete-confirm-content i {
+    font-size: 3rem;
+    color: #F44336;
+    margin-bottom: 1rem;
+}
+
+.delete-confirm-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.delete-confirm-content p {
+    color: var(--secondary-color);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.delete-confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.delete-confirm-buttons button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.delete-confirm-buttons .btn-cancel {
+    background-color: #e0e0e0;
+    color: var(--secondary-color);
+}
+
+.delete-confirm-buttons .btn-delete {
+    background-color: #F44336;
+    color: white;
+}
+
+.delete-confirm-buttons button:hover {
+    transform: translateY(-2px);
+}
+
+.delete-confirm-buttons .btn-cancel:hover {
+    background-color: #d0d0d0;
+}
+
+.delete-confirm-buttons .btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+/* تنسيقات القائمة المنبثقة للتعديل */
+.edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.edit-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.edit-modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 90%;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.edit-modal.show .edit-modal-content {
+    transform: scale(1);
+}
+
+.edit-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.edit-modal-header h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.edit-modal-close {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.edit-modal-close:hover {
+    color: var(--accent-color);
+    transform: rotate(90deg);
+}
+
+.edit-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.edit-form-group {
+    margin-bottom: 1rem;
+}
+
+.edit-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.edit-form-group input,
+.edit-form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.edit-form-group input:focus,
+.edit-form-group select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.edit-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.edit-form-actions button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.edit-form-actions .btn-cancel {
+    background-color: #e0e0e0;
+    color: var(--secondary-color);
+}
+
+.edit-form-actions .btn-save {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.edit-form-actions button:hover {
+    transform: translateY(-2px);
+}
+
+.edit-form-actions .btn-cancel:hover {
+    background-color: #d0d0d0;
+}
+
+.edit-form-actions .btn-save:hover {
+    background-color: #2980b9;
+}

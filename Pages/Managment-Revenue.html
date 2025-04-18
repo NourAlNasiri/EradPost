@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <!-- إعدادات الصفحة الأساسية -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الإيرادات</title>
+
+    <!-- روابط ملفات CSS الخارجية -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/Managment-Revenue.css">
+</head>
+
+<body>
+    <div id="header"></div>
+    <!-- حاوية الهيدر الرئيسية -->
+    <div id="header-container"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="revenue-container">
+                <!-- رأس الصفحة مع حقول البحث -->
+                <div class="page-header">
+                    <h1 class="page-title"> <i class="fas fa-receipt"></i> إدارة الإيرادات</h1>
+                    <div class="search-fields">
+                        <!-- حقول البحث الرئيسية -->
+                        <div class="search-field">
+                            <label>نوع الإيراد:</label>
+                            <select id="revenueTypeSearch">
+                                <option value="">ابحث عن نوع الإيراد...</option>
+                                <option value="parcels">الطرود البريدية</option>
+                                <option value="stamps">طوابع الطرود</option>
+                                <option value="boxes">الصناديق البريدية</option>
+                                <option value="envelopes">المظاريف</option>
+                                <option value="rent">إيجار المباني</option>
+                                <option value="misc">متنوعات</option>
+                            </select>
+                        </div>
+                        <div class="search-field">
+                            <label>رقم الوصل:</label>
+                            <input type="text" id="receiptNumberSearch" placeholder="ابحث برقم الوصل">
+                        </div>
+                        <div class="search-field">
+                            <label>نوع الدفع:</label>
+                            <select id="paymentTypeSearch">
+                                <option value="">اختر نوع الدفع...</option>
+                                <option value="cash">دفع نقدي</option>
+                                <option value="electronic">دفع إلكتروني</option>
+                            </select>
+                        </div>
+                        <button class="search-button">
+                            <i class="fas fa-search"></i> بحث
+                        </button>
+                    </div>
+                </div>
+
+                <!-- شريط التنقل بين الأقسام -->
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <!-- أزرار التنقل بين أنواع الإيرادات المختلفة -->
+                        <button class="tab active" data-tab="parcels">
+                            <i class="fas fa-box"></i> الطرود البريدية
+                        </button>
+                        <button class="tab" data-tab="stamps">
+                            <i class="fas fa-stamp"></i> طوابع الطرود
+                        </button>
+                        <button class="tab" data-tab="boxes">
+                            <i class="fas fa-inbox"></i> الصناديق البريدية
+                        </button>
+                        <button class="tab" data-tab="envelopes">
+                            <i class="fas fa-envelope"></i> المظاريف
+                        </button>
+                        <button class="tab" data-tab="rent">
+                            <i class="fas fa-building"></i> إيجار المباني
+                        </button>
+                        <button class="tab" data-tab="misc">
+                            <i class="fas fa-list"></i> متنوعات
+                        </button>
+                    </div>
+                </div>
+
+                <!-- نموذج إدخال البيانات -->
+                <form id="revenueForm" class="form-container">
+                    <!-- قسم الطرود البريدية -->
+                    <div class="form-section" id="parcels-section">
+                        <div class="section-header">
+                            <h3 class="section-title">الطرود البريدية</h3>
+                            <div class="section-total">المجموع: <span id="parcelsTotal">0 د.ع</span></div>
+                        </div>
+                        <div class="form-grid">
+                            <!-- حقول إدخال بيانات الطرود البريدية -->
+                            <div class="form-group">
+                                <label>وسيلة الدفع</label>
+                                <select name="parcelPaymentType" onchange="togglePaymentFields('parcels', this.value)">
+                                    <option value="" disabled selected>اختر وسيلة الدفع</option>
+                                    <option value="cash">دفع نقدي</option>
+                                    <option value="electronic">دفع إلكتروني</option>
+                                </select>
+                            </div>
+                            <!-- حقول الدفع النقدي -->
+                            <div class="form-group cash-fields">
+                                <label>مبلغ طوابع الطرود</label>
+                                <input type="number" name="parcelStampsAmount"
+                                    onchange="calculateSectionTotal('parcels')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label> الحزم والرزم</label>
+                                <input type="number" name="parcelCount" onchange="calculateSectionTotal('parcels')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>رقم الوصل</label>
+                                <input type="text" name="parcelReceiptNumber">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label> التاريخ</label>
+                                <input type="date" name="parcelReceiptDate">
+                            </div>
+                            <!-- حقول الدفع الإلكتروني -->
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>مبلغ طوابع الطرود الإلكترونية </label>
+                                <input type="number" name="electronicParcelStamps"
+                                    onchange="calculateSectionTotal('parcels')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>حزم ورزم إلكترونية</label>
+                                <input type="number" name="electronicParcelCount"
+                                    onchange="calculateSectionTotal('parcels')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>رقم الايصال الإلكتروني</label>
+                                <input type="text" name="electronicParcelReceiptNumber">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>تاريخ الايصال الإلكتروني</label>
+                                <input type="date" name="electronicParcelReceiptDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم طوابع الطرود -->
+                    <div class="form-section" id="stamps-section" style="display: none;">
+                        <div class="section-header">
+                            <h3 class="section-title">طوابع الطرود</h3>
+                            <div class="section-total">المجموع: <span id="stampsTotal">0 د.ع</span></div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>وسيلة الدفع</label>
+                                <select name="stampPaymentType" onchange="togglePaymentFields('stamps', this.value)">
+                                    <option value="" disabled selected>اختر وسيلة الدفع</option>
+                                    <option value="cash">دفع نقدي</option>
+                                    <option value="electronic">دفع إلكتروني</option>
+                                </select>
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>مبلغ الطوابع</label>
+                                <input type="number" name="stampAmount" onchange="calculateSectionTotal('stamps')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label> الحزم والرزم</label>
+                                <input type="number" name="stampParcelCount" onchange="calculateSectionTotal('stamps')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>رقم الوصل</label>
+                                <input type="text" name="stampReceiptNumber">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>التاريخ</label>
+                                <input type="date" name="stampReceiptDate">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>مبلغ طوابع الطرود الإلكترونية </label>
+                                <input type="number" name="electronicStampAmount"
+                                    onchange="calculateSectionTotal('stamps')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>حزم ورزم الكترونية</label>
+                                <input type="number" name="electronicStampParcelCount"
+                                    onchange="calculateSectionTotal('stamps')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>رقم الايصال الإلكتروني</label>
+                                <input type="text" name="electronicStampReceiptNumber">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>التاريخ</label>
+                                <input type="date" name="electronicStampCreationDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم الصناديق البريدية -->
+                    <div class="form-section" id="boxes-section" style="display: none;">
+                        <div class="section-header">
+                            <h3 class="section-title">تأجير الصناديق البريدية</h3>
+                            <div class="section-total">المجموع: <span id="boxesTotal">0 د.ع</span></div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>وسيلة الدفع</label>
+                                <select name="boxPaymentType" onchange="togglePaymentFields('boxes', this.value)">
+                                    <option value="" disabled selected>اختر وسيلة الدفع</option>
+                                    <option value="cash">دفع نقدي</option>
+                                    <option value="electronic">دفع إلكتروني</option>
+                                </select>
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>مبلغ إيجار صناديق البريد </label>
+                                <input type="number" name="boxRentAmount" onchange="calculateSectionTotal('boxes')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>تأمينات الصناديق البريدية</label>
+                                <input type="number" name="boxInsuranceAmount"
+                                    onchange="calculateSectionTotal('boxes')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>رقم الوصل</label>
+                                <input type="text" name="boxReceiptNumber">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>التاريخ</label>
+                                <input type="date" name="boxCreationDate">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>إيجار صناديق بريدية الالكتروني</label>
+                                <input type="number" name="electronicBoxRentAmount"
+                                    onchange="calculateSectionTotal('boxes')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>تأمينات الصناديق الالكتروني</label>
+                                <input type="number" name="electronicBoxInsuranceAmount"
+                                    onchange="calculateSectionTotal('boxes')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>رقم الايصال الإلكتروني</label>
+                                <input type="text" name="electronicBoxReceiptNumber">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>التاريخ</label>
+                                <input type="date" name="electronicBoxCreationDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم المظاريف -->
+                    <div class="form-section" id="envelopes-section" style="display: none;">
+                        <div class="section-header">
+                            <h3 class="section-title">المظاريف</h3>
+                            <div class="section-total">المجموع: <span id="envelopesTotal">0 د.ع</span></div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>وسيلة الدفع</label>
+                                <select name="envelopePaymentType"
+                                    onchange="togglePaymentFields('envelopes', this.value)">
+                                    <option value="" disabled selected>اختر وسيلة الدفع</option>
+                                    <option value="cash">دفع نقدي</option>
+                                    <option value="electronic">دفع إلكتروني</option>
+                                </select>
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>عدد المظاريف</label>
+                                <input type="number" name="envelopeCount" onchange="calculateSectionTotal('envelopes')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>المبلغ الإجمالي</label>
+                                <input type="number" name="envelopeTotalAmount"
+                                    onchange="calculateSectionTotal('envelopes')">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>رقم الوصل</label>
+                                <input type="text" name="envelopeReceiptNumber">
+                            </div>
+                            <div class="form-group cash-fields">
+                                <label>التاريخ </label>
+                                <input type="date" name="envelopeCreationDate">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>عدد المظاريف </label>
+                                <input type="number" name="electronicEnvelopeCount"
+                                    onchange="calculateSectionTotal('envelopes')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>المبلغ الإجمالي الإلكتروني</label>
+                                <input type="number" name="electronicEnvelopeTotalAmount"
+                                    onchange="calculateSectionTotal('envelopes')">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>رقم الايصال الإلكتروني</label>
+                                <input type="text" name="electronicEnvelopeReceiptNumber">
+                            </div>
+                            <div class="form-group electronic-fields" style="display: none;">
+                                <label>التاريخ </label>
+                                <input type="date" name="electronicEnvelopeCreationDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم إيجار المباني -->
+                    <div class="form-section" id="rent-section" style="display: none;">
+                        <div class="section-header">
+                            <h3 class="section-title">إيجار المباني</h3>
+                            <div class="section-total">المجموع: <span id="rentTotal">0 د.ع</span></div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>المبلغ الإجمالي</label>
+                                <input type="number" name="rentAmount" onchange="calculateSectionTotal('rent')">
+                            </div>
+                            <div class="form-group">
+                                <label>رقم الوصل</label>
+                                <input type="text" name="rentReceiptNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>التاريخ </label>
+                                <input type="date" name="rentCreationDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم المتنوعات -->
+                    <div class="form-section" id="misc-section" style="display: none;">
+                        <div class="section-header">
+                            <h3 class="section-title">متنوعات</h3>
+                            <div class="section-total">المجموع: <span id="miscTotal">0 د.ع</span></div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>وصف المتنوعات</label>
+                                <input type="text" name="miscDescription">
+                            </div>
+                            <div class="form-group">
+                                <label>المبلغ</label>
+                                <input type="number" name="miscAmount" onchange="calculateSectionTotal('misc')">
+                            </div>
+                            <div class="form-group">
+                                <label>رقم الوصل</label>
+                                <input type="text" name="miscReceiptNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>التاريخ </label>
+                                <input type="date" name="miscCreationDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- أزرار الإجراءات -->
+                    <div class="form-actions">
+                        <button type="submit" form="revenueForm" class="btn-save">
+                            <i class="fas fa-save"></i> حفظ البيانات
+                        </button>
+                        <button type="reset" form="revenueForm" class="btn-reset">
+                            <i class="fas fa-undo"></i> إعادة تعيين
+                        </button>
+                    </div>
+                </form>
+
+                <!-- جدول عرض البيانات -->
+                <div class="data-table-container">
+                    <div class="table-header">
+                        <h3 class="section-title">سجل الإيرادات</h3>
+                    </div>
+                    <div class="table-container">
+                        <!-- جدول عرض بيانات الإيرادات -->
+                        <div class="revenue-table">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>نوع الدفع</th>
+                                        <th>نوع الإيراد</th>
+                                        <th>رقم الوصل</th>
+                                        <th>مبلغ الإيراد</th>
+                                        <th>تاريخ الإضافة</th>
+                                        <th>تاريخ التعديل</th>
+                                        <th>الاجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="revenueTableBody">
+                                    <!-- سيتم تحديث محتوى الجدول ديناميكياً -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- عناصر التنقل بين الصفحات -->
+                        <div class="pagination">
+                            <button onclick="changePage('prev')" disabled>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <span class="pagination-info">صفحة <span id="currentPage">1</span> من <span
+                                    id="totalPages">1</span></span>
+                            <button onclick="changePage('next')" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="footer"></div>
+    <!-- ملفات JavaScript -->
+    <script src="../js/scriptrevenue.js"></script>
+    <script>
+        // تحميل الهيدر والفوتر مرة واحدة
+        fetch("header.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("header").innerHTML = data;
+
+                // تحميل ملف header.js
+                const script = document.createElement('script');
+                script.src = '../js/header.js';
+                document.body.appendChild(script);
+
+                // تحميل الفوتر
+                fetch("footer.html")
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("footer").innerHTML = data;
+                    });
+
+                // إضافة أحداث النقر على الروابط
+                document.querySelectorAll("#header a").forEach(link => {
+                    link.addEventListener("click", function (event) {
+                        event.preventDefault(); // منع التحديث الافتراضي
+
+                        // إزالة الكلاس active من جميع الروابط
+                        document.querySelectorAll("#header a").forEach(l => {
+                            l.classList.remove('active');
+                        });
+
+                        // إضافة الكلاس active للرابط المحدد
+                        this.classList.add('active');
+
+                        let page = this.getAttribute("data-page"); // جلب اسم الصفحة
+                        loadPage(page); // تحميل الصفحة
+                    });
+                });
+
+                // تفعيل زر القائمة للهواتف المحمولة
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navMenu = document.querySelector('.nav-menu');
+
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            });
+
+        // دالة تحميل الصفحة المحددة
+        function loadPage(page) {
+            let pageFile = page === "home" ? "home.html" : page + ".html";
+
+            fetch(pageFile)
+                .then(response => response.text())
+                .then(data => document.getElementById("content").innerHTML = data)
+                .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+        }
+    </script>
+</body>
+
+</html>

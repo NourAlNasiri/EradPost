@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد إدارة الإيرادات</title>
+    <link rel="stylesheet" href="../css/DashBoard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .header-control {
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+            padding: 20px;
+            margin: -20px 0 20px 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .header-control.fade {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="container" style="margin-top: 100px;">
+        <header class="header-control">
+            <h1>لوحة إدارة الإيرادات</h1>
+            <div class="date">
+                <i class="fas fa-calendar-alt"></i>
+                <span id="current-date"></span>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card daily-revenue">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="card-content">
+                    <h3>إيرادات اليوم</h3>
+                    <p class="amount">د.ع <span id="daily-amount">0</span></p>
+                </div>
+            </div>
+
+            <div class="card monthly-revenue">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="card-content">
+                    <h3>إيرادات الشهر</h3>
+                    <p class="amount">د.ع <span id="monthly-amount">0</span></p>
+                </div>
+            </div>
+
+            <div class="card yearly-revenue">
+                <div class="card-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="card-content">
+                    <h3>إيرادات السنة</h3>
+                    <p class="amount">د.ع <span id="yearly-amount">0</span></p>
+                </div>
+            </div>
+
+            <div class="card active-offices">
+                <div class="card-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="card-content">
+                    <h3>المكاتب النشطة</h3>
+                    <p class="amount"><span id="active-offices">0</span></p>
+                </div>
+            </div>
+
+            <div class="card daily-working">
+                <div class="card-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="card-content">
+                    <h3>المكاتب العاملة اليوم</h3>
+                    <p class="amount"><span id="daily-working">0</span></p>
+                </div>
+            </div>
+
+            <div class="card daily-interaction">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-content">
+                    <h3>المكاتب التفاعلية اليوم</h3>
+                    <p class="amount"><span id="daily-interaction">0</span></p>
+                </div>
+            </div>
+
+            <div class="card total-employees">
+                <div class="card-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="card-content">
+                    <h3>إجمالي الموظفين المسجلين</h3>
+                    <p class="amount"><span id="total-employees">0</span></p>
+                </div>
+            </div>
+
+            <div class="card active-employees">
+                <div class="card-icon">
+                    <i class="fas fa-user-clock"></i>
+                </div>
+                <div class="card-content">
+                    <h3>الموظفين النشطين حالياً</h3>
+                    <p class="amount"><span id="active-employees">0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- تحميل الفوتر -->
+    <div id="footer"></div>
+    <script src="../js/DashBoard.js"></script>
+    <!-- <script src="../js/main.js"></script> -->
+    <script>
+        // تحميل الهيدر والفوتر مرة واحدة
+        fetch("header.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("header").innerHTML = data;
+
+                // تحميل ملف header.js
+                const script = document.createElement('script');
+                script.src = '../js/header.js';
+                document.body.appendChild(script);
+
+                // تحميل الفوتر
+                fetch("footer.html")
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("footer").innerHTML = data;
+                    });
+
+                // إضافة أحداث النقر على الروابط
+                document.querySelectorAll("#header a").forEach(link => {
+                    link.addEventListener("click", function (event) {
+                        event.preventDefault(); // منع التحديث الافتراضي
+
+                        // إزالة الكلاس active من جميع الروابط
+                        document.querySelectorAll("#header a").forEach(l => {
+                            l.classList.remove('active');
+                        });
+
+                        // إضافة الكلاس active للرابط المحدد
+                        this.classList.add('active');
+
+                        let page = this.getAttribute("data-page"); // جلب اسم الصفحة
+                        loadPage(page); // تحميل الصفحة
+                    });
+                });
+
+                // تفعيل زر القائمة للهواتف المحمولة
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navMenu = document.querySelector('.nav-menu');
+
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            });
+
+        // دالة تحميل الصفحة المحددة
+        function loadPage(page) {
+            let pageFile = page === "home" ? "home.html" : page + ".html";
+
+            fetch(pageFile)
+                .then(response => response.text())
+                .then(data => document.getElementById("content").innerHTML = data)
+                .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+        }
+        // هذا لجعل الرأس يختفي عند التمرير
+        // إضافة مراقب التمرير للصفحة
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('.header-control');
+            if (window.scrollY > 50) {
+                header.classList.add('fade');
+            } else {
+                header.classList.remove('fade');
+            }
+        });
+    </script>
+</body>
+
+</html>

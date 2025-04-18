@@ -1,0 +1,276 @@
+/* استيراد الخطوط */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
+
+/* متغيرات الألوان */
+:root {
+    --primary-color: #4361ee;    /* أزرق #0D1936 */
+    --secondary-color: #535354;
+    --background-color: #EFEFEF;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --white-color: #FFF;
+    --black-color: #000;
+    --input-border-color: #E3E4E6;
+    --transition-3s: 0.3s;
+    --facebook-color: #1877F2;
+    --instagram-color: #E4405F;
+    --twitter-color: #1DA1F2;
+}
+
+/* الأنماط العامة */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    direction: rtl; /* اتجاه النص من اليمين لليسار */
+}
+
+/* العناصر القابلة لإعادة الاستخدام */
+a{
+    text-decoration: none;
+    color: var(--black-color);
+    transition: var(--transition-3s);
+}
+a:hover{
+    text-decoration: underline;
+}
+
+/* تنسيق الصفحة الرئيسية */
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--background-color);
+}
+
+/* حاوية النموذج */
+.wrapper{
+    position: relative;
+    width: 430px;
+    height: 500px;
+    background-color: var(--white-color);
+    border-radius: 15px;
+    padding: 120px 32px 64px;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 8px 15px var(--shadow-color);
+    transition: var(--transition-3s);
+    overflow: hidden;
+}
+
+/* عنوان النظام */
+.system-title {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    padding: 0 20px;
+}
+
+.system-title h1 {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    font-family: 'Cairo', sans-serif;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, var(--primary-color), #2a4a8f);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 5px 0;
+}
+
+/* رأس النموذج */
+.form-header{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 70px;
+    background-color: var(--primary-color);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* تنسيق زوايا رأس النموذج */
+.form-header::before, .form-header::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 30px;
+}
+.form-header::before{
+    left: -30px;
+    border-top-right-radius: 50%;
+    box-shadow: 15px 0 0 var(--primary-color);
+}
+.form-header::after{
+    right: -30px;
+    border-top-left-radius: 50%;
+    box-shadow: -15px 0 0 var(--primary-color);
+}
+
+/* العناوين */
+.titles{
+    position: relative;
+}
+.title-login{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: var(--white-color);
+    font-size: 22px;
+    font-weight: 600;
+    transition: var(--transition-3s);
+}
+
+/* نموذج تسجيل الدخول */
+.login-form{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    transition: var(--transition-3s);
+}
+
+/* حقول الإدخال */
+.input-box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+.input-field{
+    width: 100%;
+    height: 55px;
+    font-size: 16px;
+    background: transparent;
+    color: var(--black-color);
+    padding: 0 45px 0 20px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 30px;
+    outline: none;
+    transition: var(--transition-3s);
+    text-align: right;
+}
+.input-field:focus{
+    border: 1px solid var(--primary-color);
+}
+
+/* تسميات حقول الإدخال */
+.label{
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    color: var(--secondary-color);
+    transition: 0.2s;
+    cursor: text;
+    font-size: 15px;
+}
+.input-field:focus ~ .label,
+.input-field:valid ~ .label{
+    top: 0;
+    font-size: 14px;
+    background-color: var(--white-color);
+    color: var(--primary-color);
+    padding: 0 10px;
+}
+.input-field:valid ~ .label{
+    color: var(--secondary-color);
+}
+
+/* أيقونات حقول الإدخال */
+.icon{
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--secondary-color);
+}
+
+/* زر الإرسال */
+.btn-submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition-3s);
+    margin-top: 30px;
+}
+.btn-submit:hover{
+    gap: 15px;
+}
+.btn-submit i{
+    font-size: 20px;
+}
+
+/* أيقونات التواصل الاجتماعي */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--white-color);
+    font-size: 20px;
+    transition: var(--transition-3s);
+}
+
+/* ألوان أيقونات التواصل الاجتماعي */
+.social-icon:nth-child(1) {
+    background-color: var(--facebook-color);
+}
+
+.social-icon:nth-child(2) {
+    background-color: var(--instagram-color);
+}
+
+.social-icon:nth-child(3) {
+    background-color: var(--twitter-color);
+}
+
+/* تأثيرات التحويم على أيقونات التواصل الاجتماعي */
+.social-icon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+/* التصميم المتجاوب */
+@media only screen and (max-width: 564px){
+    .wrapper{
+        margin: 20px;
+    }
+}

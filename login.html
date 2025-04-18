@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/login.css">
+    <!-- BOXICONS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>تسجيل الدخول | البريد العراقي</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form-header">
+            <div class="titles">
+                <div class="title-login">الدخول</div>
+            </div>
+        </div>
+        <div class="system-title">
+            <h1>نظام إدارة الإيرادات</h1>
+        </div>
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="login-form" autocomplete="off">
+            <div class="input-box">
+                <input type="text" class="input-field" id="log-username" required>
+                <label for="log-username" class="label">اسم المستخدم</label>
+                <i class='bx bx-user icon'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" id="log-pass" required>
+                <label for="log-pass" class="label">كلمة المرور</label>
+                <i class='bx bx-lock-alt icon' ></i>
+            </div>
+            <div class="input-box">
+                <button type="submit" class="btn-submit" id="SignInBtn">تسجيل الدخول <i class='bx bx-log-in' ></i></button>
+            </div>
+            <!-- Social Icons -->
+            <div class="social-icons">
+                <a href="https://www.facebook.com/postiraqco" class="social-icon" target="_blank" title="فيسبوك">
+                    <i class='bx bxl-facebook'></i>
+                </a>
+                <a href="https://www.instagram.com/postiraqco" class="social-icon" target="_blank" title="انستغرام">
+                    <i class='bx bxl-instagram'></i>
+                </a>
+                <a href="https://x.com/postiraqco" class="social-icon" target="_blank" title="تويتر">
+                    <i class='bx bxl-xing'></i>
+                </a>
+            </div>
+        </form>
+    </div>
+    <!-- JAVASCRIPT for login -->
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('log-username').value;
+            const password = document.getElementById('log-pass').value;
+
+            // هنا يمكنك إضافة التحقق من صحة بيانات المستخدم
+            if (username && password) {
+                // تخزين حالة تسجيل الدخول في localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', username);
+                
+                // التوجيه إلى الصفحة الرئيسية
+                window.location.href = 'index.html';
+            } else {
+                alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+/* تنسيق التذييل الرئيسي */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #007bff 0%, #0d47a1 100%);
+    padding: 12px 0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: 'Cairo', 'Arial', sans-serif;
+    z-index: 100;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+/* تنسيق محتوى التذييل */
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* تنسيق شعار التذييل */
+.footer-logo {
+    position: relative;
+    display: inline-block;
+}
+
+/* تنسيق صورة الشعار */
+.post-logo {
+    height: 40px;
+    width: auto;
+    filter: brightness(0) invert(1); /* تحويل لون الشعار إلى أبيض */
+    transition: all 0.3s ease;
+}
+
+/* تأثير التحويم على الشعار */
+.post-logo:hover {
+    transform: scale(1.1);
+    filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
+}
+
+/* تنسيق مربع معلومات المطور */
+.developer-tooltip {
+    visibility: hidden;
+    position: absolute;
+    bottom: 120%;
+    right: 0;
+    transform: translateX(0) scale(0.95);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #2c3e50;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    width: 280px;
+    text-align: right;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* سهم مربع معلومات المطور */
+.developer-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* إظهار مربع معلومات المطور عند التحويم */
+.footer-logo:hover .developer-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+/* تنسيق عنوان مربع معلومات المطور */
+.developer-tooltip h4 {
+    margin: 0 0 15px 0;
+    color: #1a237e;
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 8px;
+    position: relative;
+}
+
+/* تنسيق خط تحت عنوان مربع معلومات المطور */
+.developer-tooltip h4::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    width: 50px;
+    height: 2px;
+    background: #1a237e;
+}
+
+/* تنسيق فقرات مربع معلومات المطور */
+.developer-tooltip p {
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #546e7a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* تنسيق النقاط قبل الفقرات */
+.developer-tooltip p::before {
+    content: '•';
+    color: #1a237e;
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* تنسيق الفقرة الأخيرة في مربع معلومات المطور */
+.developer-tooltip p:last-child {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #e0e0e0;
+    color: #78909c;
+    font-size: 13px;
+}
+
+/* تنسيق نص التذييل */
+.footer-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* تنسيق حقوق النشر */
+.copyright {
+    margin: 0;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    line-height: 1.4;
+}
+
+/* تنسيق النص التقني */
+.technical {
+    margin: 0;
+    color: #e3f2fd;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+}
+
+/* تنسيق أيقونات التواصل الاجتماعي */
+.footer-social-icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+/* تنسيق أيقونة التواصل الاجتماعي */
+.footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* ألوان أيقونات التواصل الاجتماعي */
+.footer-social-icon:nth-child(1) {
+    background-color: #1877F2; /* لون فيسبوك */
+}
+
+.footer-social-icon:nth-child(2) {
+    background-color: #E4405F; /* لون انستغرام */
+}
+
+.footer-social-icon:nth-child(3) {
+    background-color: #1DA1F2; /* لون تويتر */
+}
+
+/* تأثير التحويم على أيقونات التواصل الاجتماعي */
+.footer-social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* تأثير النبض عند التحويم على أيقونات التواصل الاجتماعي */
+.footer-social-icon:hover::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid #FFD700; /* لون أصفر ذهبي */
+    top: -3px;
+    left: -3px;
+    animation: pulse 1.5s infinite;
+}
+
+/* حركة النبض */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* تنسيقات الشاشات المتوسطة */
+@media (max-width: 768px) {
+    .footer {
+        padding: 10px 0;
+        min-height: 50px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px;
+    }
+    
+    .post-logo {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .copyright {
+        font-size: 13px;
+    }
+    
+    .technical {
+        font-size: 11px;
+    }
+    
+    .footer-social-icons {
+        justify-content: center;
+    }
+    
+    .footer-social-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    /* تنسيق مربع معلومات المطور للشاشات المتوسطة */
+    .developer-tooltip {
+        position: fixed;
+        bottom: auto;
+        top: 50%;
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, -50%) scale(0.95);
+        width: 90%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .developer-tooltip::before {
+        display: none;
+    }
+
+    .footer-logo:hover .developer-tooltip {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* تنسيقات الشاشات الصغيرة */
+@media (max-width: 480px) {
+    .developer-tooltip {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .developer-tooltip h4 {
+        font-size: 16px;
+    }
+
+    .developer-tooltip p {
+        font-size: 13px;
+    }
+} 

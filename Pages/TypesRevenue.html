@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!-- صفحة إدارة أنواع الإيرادات - تتيح إضافة وتعديل وعرض أنواع الإيرادات المختلفة -->
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أنواع الإيرادات</title>
+    <!-- استيراد ملف الأنماط الخاص بالتطبيق -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- استيراد الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+    <!-- الحاوية الرئيسية للصفحة -->
+    <div class="container" style="margin-top: 120px;">
+        <!-- رأس الصفحة - يحتوي على العنوان وقسم البحث -->
+        <div class="header-types-of-revenue" style="position: sticky; top: 150px; background-color: #fff; z-index: 100; padding: 15px 0; margin-bottom: 20px;">
+            <h1><i class="fas fa-coins"></i> أنواع الإيرادات</h1>
+            <!-- قسم البحث وإضافة نوع إيراد جديد -->
+            <div class="search-section">
+                <input type="text" class="search-input" placeholder="بحث عن نوع الايراد...">
+                <button class="btn" onclick="searchSection()">
+                    <i class="fas fa-search"></i> بحث
+                </button>
+                <button class="btn" onclick="openModal()">
+                    <i class="fas fa-plus"></i> إضافة نوع الايراد
+                </button>
+            </div>
+        </div>
+
+        <!-- جدول عرض أنواع الإيرادات -->
+        <table>
+            <thead>
+                <tr>
+                    <th>التسلسل</th>
+                    <th>نوع الايراد</th>
+                    <th>الحالة</th>
+                    <th>تاريخ الإضافة</th>
+                    <th>تاريخ التعديل</th>
+                    <th>الاجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="sectionsTableBody">
+                <!-- سيتم إضافة الصفوف ديناميكياً عن طريق JavaScript -->
+            </tbody>
+        </table>
+
+        <!-- رسالة عدم وجود بيانات -->
+        <div id="noDataMessage" class="no-data-message" >
+            <i class="fas fa-database" ></i>
+            <h3>لا توجد بيانات مضافة حالياً</h3>
+            <p>يمكنك إضافة نوع إيراد جديد باستخدام زر "إضافة نوع الايراد"</p>
+        </div>
+
+        <!-- شريط التنقل بين الصفحات -->
+        <div class="pagination">
+            <!-- سيتم إضافة أزرار التنقل ديناميكياً -->
+        </div>
+    </div>
+
+    <!-- نافذة منبثقة لإضافة/تعديل نوع الإيراد -->
+    <div id="sectionModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-plus-circle"></i> إضافة نوع ايراد جديد</h2>
+            <!-- نموذج إدخال بيانات نوع الإيراد -->
+            <div class="form-group">
+                <label for="sectionName">نوع الايراد:</label>
+                <input type="text" id="sectionName" class="form-control" placeholder="أدخل نوع الايراد">
+            </div>
+            <div class="form-group">
+                <label for="sectionStatus">الحالة:</label>
+                <select id="sectionStatus" class="form-control" required>
+                    <option value="" disabled selected>حدد الان</option>
+                    <option value="فعال" >فعال</option>
+                    <option value="غير فعال" >غير فعال</option>
+                </select>
+            </div>
+            <!-- أزرار التحكم في النافذة المنبثقة -->
+            <div class="modal-buttons">
+                <button class="btn" onclick="closeModal()" style="background-color: #e0e0e0; color: #333;">
+                    <i class="fas fa-times"></i> إغلاق
+                </button>
+                <button class="btn" onclick="saveSection()">
+                    <i class="fas fa-save"></i> حفظ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تأكيد الحذف -->
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content delete-confirm">
+            <div class="delete-icon">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+            <h2>تأكيد الحذف</h2>
+            <p>هل أنت متأكد من حذف نوع الايراد:</p>
+            <div id="sectionToDeleteName" class="office-name"></div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-cancel" onclick="closeDeleteModal()">
+                    <i class="fas fa-times"></i>
+                    إلغاء
+                </button>
+                <button type="button" class="btn btn-delete" onclick="confirmDelete()">
+                    <i class="fas fa-trash"></i>
+                    حذف
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- تحميل الفوتر -->
+    <div id="footer"></div>
+
+    <!-- سيتم تحميل ملفات JavaScript ديناميكياً من خلال main.js -->
+    <script src="../js/TypesRevenue.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // تحميل الهيدر والفوتر مرة واحدة
+        fetch("header.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("header").innerHTML = data;
+
+                // إضافة أحداث النقر على الروابط
+                document.querySelectorAll("#header a").forEach(link => {
+                    link.addEventListener("click", function(event) {
+                        event.preventDefault(); // منع التحديث الافتراضي
+                        let page = this.getAttribute("data-page"); // جلب اسم الصفحة
+                        loadPage(page); // تحميل الصفحة
+                    });
+                });
+            });
+
+        // تحميل الفوتر
+        fetch("footer.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("footer").innerHTML = data;
+            });
+        // دالة تحميل الصفحة المحددة
+        function loadPage(page) {
+            let pageFile = page === "home" ? "home.html" : page + ".html";
+
+            fetch(pageFile)
+                .then(response => response.text())
+                .then(data => document.getElementById("content").innerHTML = data)
+                .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+        }
+    </script>
+</body>
+</html>

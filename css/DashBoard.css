@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+}
+
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --success-color: #4cc9f0;
+    --warning-color: #f72585;
+    --info-color: #4895ef;
+    --light-bg: #f8f9fa;
+    --dark-text: #2b2d42;
+    --light-text: #8d99ae;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--light-bg);
+    direction: rtl;
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    /* max-width: 100%; */
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.header-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    color: white;
+}
+
+.header-control h1 {
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.card-icon {
+    font-size: 24px;
+    margin-bottom: 15px;
+    background: var(--light-bg);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+    margin: 0 auto 15px;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.card-content {
+    width: 100%;
+    text-align: center;
+}
+
+.card-content h3 {
+    color: var(--light-text);
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+/* تخصيص الألوان لكل بطاقة */
+.daily-revenue .card-icon { 
+    color: var(--warning-color);
+    background: rgba(247, 37, 133, 0.1);
+}
+.monthly-revenue .card-icon { 
+    color: var(--success-color);
+    background: rgba(76, 201, 240, 0.1);
+}
+.yearly-revenue .card-icon { 
+    color: var(--info-color);
+    background: rgba(72, 149, 239, 0.1);
+}
+.active-offices .card-icon { 
+    color: var(--primary-color);
+    background: rgba(67, 97, 238, 0.1);
+}
+.daily-working .card-icon { 
+    color: var(--secondary-color);
+    background: rgba(63, 55, 201, 0.1);
+}
+.daily-interaction .card-icon { 
+    color: #e67e22;
+    background: rgba(230, 126, 34, 0.1);
+}
+.total-employees .card-icon { 
+    color: #34495e;
+    background: rgba(52, 73, 94, 0.1);
+}
+.active-employees .card-icon { 
+    color: #16a085;
+    background: rgba(22, 160, 133, 0.1);
+}
+
+/* تحسينات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header-control {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .header-control h1 {
+        font-size: 20px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .card {
+        padding: 15px;
+    }
+    
+    .card-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .card-content h3 {
+        margin-bottom: 8px;
+    }
+    
+    .amount {
+        margin-bottom: 3px;
+    }
+} 

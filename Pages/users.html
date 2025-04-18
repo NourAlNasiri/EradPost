@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- تعريف الترميز ومعلومات الصفحة الأساسية -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المستخدمين</title>
+    <!-- روابط ملفات CSS والخطوط -->
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header"></div>
+    <!-- الحاوية الرئيسية للصفحة -->
+    <div class="container" style="margin-top: 120px;">
+        <!-- رأس الصفحة: يحتوي على العنوان وشريط البحث وزر إضافة مستخدم جديد -->
+        <div class="page-header" style="position: sticky; top: 150px; background-color: #fff; z-index: 100;  margin-bottom: 25px;">
+            <h1 class="page-title">
+                <i class="fas fa-users-cog"></i>
+                إدارة المستخدمين
+            </h1>
+            <div class="user-actions">
+                <!-- مربع البحث مع أيقونة -->
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="بحث عن مستخدم..." onkeyup="searchUsers()">
+                    <i class="fas fa-search"></i>
+                </div>
+                <!-- زر إضافة مستخدم جديد -->
+                <button class="btn-primary" onclick="showAddUserModal()">
+                    <i class="fas fa-plus"></i>
+                    إضافة مستخدم جديد
+                </button>
+            </div>
+        </div>
+
+        <!-- قسم عرض قائمة المستخدمين -->
+        <div class="users-list">
+            <!-- جدول عرض بيانات المستخدمين -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الاسم الكامل</th>
+                        <th>اسم المستخدم</th>
+                        <th>رقم الهاتف</th>
+                        <th>الصلاحية</th>
+                        <th>المكتب</th>
+                        <th>المحافظة</th>
+                        <th>التفعيل</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable">
+                    <!-- يتم إضافة صفوف المستخدمين ديناميكياً عبر JavaScript -->
+                </tbody>
+            </table>
+            
+            <!-- رسالة عدم وجود بيانات -->
+            <div id="noDataMessage" class="no-data-message">
+                <i class="fas fa-users-slash"></i>
+                <h3>لا توجد مستخدمين مضافة حالياً</h3>
+                <p>يمكنك إضافة مستخدم جديد باستخدام زر "إضافة مستخدم جديد"</p>
+            </div>
+            
+            <!-- شريط التنقل بين الصفحات -->
+            <div id="pagination" class="pagination">
+                <!-- يتم إنشاء أزرار التنقل ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
+    <!-- النافذة المنبثقة لإضافة/تعديل المستخدم -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">
+                    <i class="fas fa-user-plus"></i>
+                    إضافة مستخدم جديد
+                </h3>
+                <button class="close-modal" onclick="closeUserModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- نموذج إدخال بيانات المستخدم -->
+            <div class="modal-body">
+                <form id="userForm">
+                    <!-- قسم المعلومات الأساسية -->
+                    <div class="accordion-section">
+                        <div class="accordion-header" onclick="toggleAccordion('basicInfo')">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-user-circle"></i>
+                                المعلومات الأساسية
+                            </h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div id="basicInfo" class="accordion-content">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">الاسم الكامل</label>
+                                    <div class="input-group">
+                                        <input type="text" id="fullName" class="form-control" required>
+                                        <i class="fas fa-user input-group-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">اسم المستخدم</label>
+                                    <div class="input-group">
+                                        <input type="text" id="username" class="form-control" required>
+                                        <i class="fas fa-at input-group-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">كلمة المرور</label>
+                                    <div class="input-group">
+                                        <input type="password" id="password" class="form-control" required>
+                                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <small class="form-text text-muted password-hint" style="display: none;">
+                                        اتركه فارغاً إذا لم ترد تغيير كلمة المرور
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">رقم الهاتف</label>
+                                    <div class="input-group">
+                                        <input type="tel" id="phone" class="form-control">
+                                        <i class="fas fa-phone input-group-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم معلومات العمل -->
+                    <div class="accordion-section">
+                        <div class="accordion-header" onclick="toggleAccordion('workInfo')">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-briefcase"></i>
+                                معلومات العمل
+                            </h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div id="workInfo" class="accordion-content">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="userImage">صورة المستخدم</label>
+                                    <div class="input-group">
+                                        <input type="file" id="userImage" class="form-control" accept="image/*">
+                                        <i class="fas fa-image input-group-icon"></i>
+                                    </div>
+                                    <small class="form-text text-muted">اختياري - يمكنك تحميل صورة للمستخدم</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="role">الصلاحية</label>
+                                    <div class="input-group">
+                                        <select id="role" class="form-control" required>
+                                            <option value="">اختر الصلاحية</option>
+                                            <option value="office_staff">موظف مكتب</option>
+                                            <option value="supervisor">مشرف قسم</option>
+                                            <option value="admin">مدير نظام</option>
+                                        </select>
+                                        <i class="fas fa-user-shield input-group-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="office">المكتب</label>
+                                    <div class="input-group">
+                                        <input type="text" id="office" class="form-control">
+                                        <i class="fas fa-building input-group-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="governorate">المحافظة</label>
+                                    <div class="input-group">
+                                        <select id="governorate" class="form-control" required>
+                                            <option value="">اختر المحافظة</option>
+                                            <option value="baghdad">بغداد</option>
+                                            <option value="basra">البصرة</option>
+                                            <option value="mosul">الموصل</option>
+                                            <option value="kirkuk">كركوك</option>
+                                            <option value="karbala">كربلاء</option>
+                                            <option value="najaf">النجف</option>
+                                            <option value="kut">الكوت</option>
+                                            <option value="amara">العمارة</option>
+                                            <option value="nasiriyah">الناصرية</option>
+                                            <option value="samawa">السماوة</option>
+                                            <option value="diwaniyah">الديوانية</option>
+                                            <option value="ramadi">الرمادي</option>
+                                            <option value="fallujah">الفلوجة</option>
+                                        </select>
+                                        <i class="fas fa-map-marker-alt input-group-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم تفعيل/تعطيل الحساب -->
+                    <div class="accordion-section">
+                        <div class="accordion-header" onclick="toggleAccordion('accountStatus')">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-toggle-on"></i>
+                                حالة الحساب
+                            </h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div id="accountStatus" class="accordion-content">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <select id="status" class="form-control" required>
+                                            <option value="" disabled selected>حدد الان</option>
+                                            <option value="active">تفعيل</option>
+                                            <option value="inactive">تعطيل</option>
+                                        </select>
+                                        <i class="fas fa-power-off input-group-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- أزرار حفظ وإلغاء النموذج -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="closeUserModal()">
+                            <i class="fas fa-times"></i>
+                            إلغاء
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i>
+                            حفظ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تأكيد حذف المستخدم -->
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content delete-confirm">
+            <div class="delete-icon">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+            <h2>تأكيد الحذف</h2>
+            <p>هل أنت متأكد من حذف المستخدم التالي:</p>
+            <div id="deleteUserName" class="office-name"></div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-cancel" onclick="closeDeleteConfirmModal()">
+                    <i class="fas fa-times"></i>
+                    إلغاء
+                </button>
+                <button type="button" class="btn btn-delete" onclick="confirmDelete()">
+                    <i class="fas fa-trash"></i>
+                    حذف
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة عرض التفاصيل الكاملة للمستخدم -->
+    <div id="userDetailsModal" class="user-details-modal">
+        <div class="user-details-content">
+            <div class="user-details-header">
+                <h3>تفاصيل المستخدم</h3>
+                <button class="close-modal" onclick="closeUserDetailsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- عرض معلومات المستخدم بشكل منظم -->
+            <div class="user-details-body">
+                <!-- مجموعة معلومات الهوية الشخصية -->
+                <div class="user-info-group">
+                    <i class="fas fa-user"></i>
+                    <div class="user-info-content">
+                        <div class="user-info-label">الاسم الكامل</div>
+                        <div class="user-info-value" id="detailFullName"></div>
+                    </div>
+                </div>
+                <div class="user-info-group">
+                    <i class="fas fa-user-circle"></i>
+                    <div class="user-info-content">
+                        <div class="user-info-label">اسم المستخدم</div>
+                        <div class="user-info-value" id="detailUsername"></div>
+                    </div>
+                </div>
+                <!-- معلومات الاتصال -->
+                <div class="user-info-group">
+                    <i class="fas fa-phone"></i>
+                    <div class="user-info-content">
+                        <div class="user-info-label">رقم الهاتف</div>
+                        <div class="user-info-value" id="detailPhone"></div>
+                    </div>
+                </div>
+                <!-- معلومات العمل والصلاحيات -->
+                <div class="user-info-group">
+                    <i class="fas fa-user-shield"></i>
+                    <div class="user-info-content">
+                        <div class="user-info-label">الصلاحية</div>
+                        <div class="user-info-value" id="detailRole"></div>
+                    </div>
+                </div>
+                <div class="user-info-group">
+                    <i class="fas fa-building"></i>
+                    <div class="user-info-content">
+                        <div class="user-info-label">المكتب</div>
+                        <div class="user-info-value" id="detailOffice"></div>
+                    </div>
+                </div>
+                <div class="user-info-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="user-info-content">
+                        <div class="user-info-label">المحافظة</div>
+                        <div class="user-info-value" id="detailGovernorate"></div>
+                    </div>
+                </div>
+                <!-- حالة تفعيل الحساب -->
+                <div class="user-info-group">
+                    <i class="fas fa-toggle-on"></i>
+                    <div class="user-info-content">
+                        <div class="user-info-label">التفعيل</div>
+                        <div class="user-info-value">
+                            <span id="detailStatus" class="user-status"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- زر الإلغاء -->
+            <div class="user-details-footer">
+                <button class="btn-cancel" onclick="closeUserDetailsModal()">
+                    <i class="fas fa-times"></i>
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نظام الإشعارات للتنبيهات والرسائل -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <div class="notification-title"></div>
+            <div class="notification-message"></div>
+        </div>
+        <button class="notification-close" onclick="hideNotification()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div id="footer"></div>
+
+    <!-- ربط ملف JavaScript الخاص بوظائف إدارة المستخدمين -->
+    <script src="../js/user.js"></script>
+    <!-- <script src="../js/main.js"></script> -->
+    <script>
+        // تحميل الهيدر والفوتر مرة واحدة
+        fetch("header.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("header").innerHTML = data;
+                
+                // تحميل ملف header.js
+                const script = document.createElement('script');
+                script.src = '../js/header.js';
+                document.body.appendChild(script);
+
+                // إضافة أحداث النقر على الروابط
+                document.querySelectorAll("#header a").forEach(link => {
+                    link.addEventListener("click", function(event) {
+                        event.preventDefault(); // منع التحديث الافتراضي
+                        
+                        // إزالة الكلاس active من جميع الروابط
+                        document.querySelectorAll("#header a").forEach(l => {
+                            l.classList.remove('active');
+                        });
+                        
+                        // إضافة الكلاس active للرابط المحدد
+                        this.classList.add('active');
+                        
+                        let page = this.getAttribute("data-page"); // جلب اسم الصفحة
+                        loadPage(page); // تحميل الصفحة
+                    });
+                });
+
+                // تفعيل زر القائمة للهواتف المحمولة
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navMenu = document.querySelector('.nav-menu');
+                
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            });
+
+        // تحميل الفوتر
+        fetch("footer.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("footer").innerHTML = data;
+            });
+
+        // دالة تحميل الصفحة المحددة
+        function loadPage(page) {
+            let pageFile = page === "home" ? "home.html" : page + ".html";
+
+            fetch(pageFile)
+                .then(response => response.text())
+                .then(data => document.getElementById("content").innerHTML = data)
+                .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+        }
+    </script>
+</body>
+</html> 
